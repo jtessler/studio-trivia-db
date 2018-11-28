@@ -1,25 +1,30 @@
+import QuestionForm from './QuestionForm';
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import firebase from 'firebase';
 import './App.css';
 
 class App extends Component {
+  componentWillMount() {
+    var config = {
+      apiKey: "AIzaSyADAYC7lX5QVEspv8BUeV2uDqrFle8yQpk",
+      authDomain: "studio-trivia-db.firebaseapp.com",
+      databaseURL: "https://studio-trivia-db.firebaseio.com",
+      projectId: "studio-trivia-db",
+      storageBucket: "studio-trivia-db.appspot.com",
+      messagingSenderId: "736024037811"
+    };
+    firebase.initializeApp(config);
+  }
+
+  handleSubmit(formData) {
+    firebase.database().ref("/questions").push(formData);
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <QuestionForm
+            onSubmit={data => this.handleSubmit(data)} />
       </div>
     );
   }
