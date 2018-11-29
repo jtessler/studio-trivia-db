@@ -39,6 +39,7 @@ class QuestionForm extends Component {
       return (
         <ChoiceField
             key={i}
+            disabled={this.props.disabled}
             onRadioChange={handleRadioChange}
             onTextChange={handleTextChange}
             value={choice}
@@ -51,13 +52,14 @@ class QuestionForm extends Component {
     return (
       <div className="QuestionForm">
         <QuestionTextField
+            disabled={this.props.disabled}
             value={this.state.question}
             onChange={(e) => this.setState({ question: e.target.value })} />
 
         { this.renderChoiceFields() }
 
         <SubmitButton
-            disabled={!this.isReadyToSubmit()}
+            disabled={this.props.disabled || !this.isReadyToSubmit()}
             onClick={() => this.handleClick()} />
       </div>
     );
@@ -68,6 +70,7 @@ var QuestionTextField = (props) => (
   <div className="QuestionTextField">
     <TextField
         onChange={props.onChange}
+        disabled={props.disabled}
         value={props.value}
         label="Enter a question"
         fullWidth={true}
@@ -79,9 +82,11 @@ var QuestionTextField = (props) => (
 var ChoiceField = (props) => (
   <div className="ChoiceField">
     <Radio
+        disabled={props.disabled}
         checked={props.checked}
         onChange={props.onRadioChange} />
     <TextField
+        disabled={props.disabled}
         value={props.value}
         onChange={props.onTextChange}
         className="ChoiceTextField"
