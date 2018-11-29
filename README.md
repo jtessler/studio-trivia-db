@@ -34,16 +34,10 @@ The shared database has the following top-level paths:
         String question text, e.g. "How many states are in the USA?"
 
       - `choices`<br>
-        Object containing all multiple choice answers for a single question
-
-        - `<choice-id>`<br>
-          String multiple choice answer, e.g. "50 states"
-
-        - `...`<br>
-          Repeating `<choice-id>` objects for each multiple choice answer
+        Array of strings representing multiple choice answers
 
       - `correct_choice`<br>
-        String ID of the solution of the form `<choice-id>`
+        Index of the correct answer in the `choices` array
 
       - `user`
         String ID of the user who created the question of the form `<user-id>`
@@ -51,8 +45,8 @@ The shared database has the following top-level paths:
     - `...`<br>
       Repeating `<question-id>` objects for each trivia question and answer
 
-Note, `<user-id>`, `<question-id>`, and `<choice-id>` are randomly generated
-string IDs and guaranteed unique.
+Note, `<user-id>` and `<question-id>` are randomly generated string IDs and
+guaranteed unique.
 
 # Create React App
 
