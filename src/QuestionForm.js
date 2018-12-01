@@ -9,31 +9,33 @@ class QuestionForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      question: "",
+      question_text: "",
       choices: new Array(4).fill(""),
-      correct_choice: 0,
+      correct_choice_index: 0,
     };
   }
 
   isReadyToSubmit() {
-    var hasText = (s) => s.trim().length > 0;
-    return hasText(this.state.question) && this.state.choices.every(hasText);
+    var hasText = (text) => text.trim().length > 0;
+    return hasText(this.state.question_text)
+        && this.state.choices.every(hasText);
   }
 
   handleClick() {
     this.props.onSubmit(this.state);
+    // Reset state to default values.
     this.setState({
-      question: "",
+      question_text: "",
       choices: new Array(4).fill(""),
-      correct_choice: 0,
+      correct_choice_index: 0,
     });
   }
 
   renderChoiceFields() {
     return this.state.choices.map((choice, i, choices) => {
-      var handleRadioChange = () => this.setState({ correct_choice: i });
-      var handleTextChange = (e) => {
-        choices[i] = e.target.value;
+      var handleRadioChange = () => this.setState({ correct_choice_index: i });
+      var handleTextChange = (event) => {
+        choices[i] = event.target.value;
         this.setState({ choices: choices });
       };
       return (
@@ -43,18 +45,21 @@ class QuestionForm extends Component {
             onRadioChange={handleRadioChange}
             onTextChange={handleTextChange}
             value={choice}
-            checked={this.state.correct_choice === i} />
+            checked={this.state.correct_choice_index === i} />
       );
     });
   }
 
   render() {
+    var handleTextChange = (event) => {
+      this.setState({ question_text: event.target.value });
+    };
     return (
       <div className="QuestionForm">
         <QuestionTextField
             disabled={this.props.disabled}
-            value={this.state.question}
-            onChange={(e) => this.setState({ question: e.target.value })} />
+            value={this.state.question_text}
+            onChange={handleTextChange} />
 
         { this.renderChoiceFields() }
 

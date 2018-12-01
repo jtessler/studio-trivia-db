@@ -39,7 +39,12 @@ class App extends Component {
   }
 
   handleSubmit(formData) {
-    firebase.database().ref("/questions").push(formData);
+    firebase.database().ref("/questions").push({
+      question_text: formData.question_text.trim(),
+      choices: formData.choices.map(choice => choice.trim()),
+      correct_choice_index: formData.correct_choice_index,
+      user_id: firebase.auth().currentUser.uid,
+    });
   }
 
   handleHeaderAction() {

@@ -18,7 +18,7 @@ The shared database has the following top-level paths:
       - `name`<br>
       String display name, e.g. "Joe Tessler"
 
-      - `avatar`<br>
+      - `avatar_url`<br>
         String URL to a profile picture a.k.a. avatar
 
     - `...`<br>
@@ -30,16 +30,16 @@ The shared database has the following top-level paths:
     - `<question-id>`<br>
       Object containing data for a single trivia question and answer
 
-      - `question`<br>
+      - `question_text`<br>
         String question text, e.g. "How many states are in the USA?"
 
       - `choices`<br>
         Array of strings representing multiple choice answers
 
-      - `correct_choice`<br>
+      - `correct_choice_index`<br>
         Index of the correct answer in the `choices` array
 
-      - `user`
+      - `user_id`
         String ID of the user who created the question of the form `<user-id>`
 
     - `...`<br>
