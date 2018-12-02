@@ -1,0 +1,9 @@
+.ChoiceField {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.ChoiceTextField {
+  width: 100%;
+}

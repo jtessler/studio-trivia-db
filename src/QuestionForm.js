@@ -1,5 +1,5 @@
 import Button from '@material-ui/core/Button';
-import Radio from '@material-ui/core/Radio';
+import QuestionChoiceFields from './QuestionChoiceFields';
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 
@@ -15,13 +15,35 @@ class QuestionForm extends Component {
     };
   }
 
+  handleQuestionTextChange(event) {
+    this.setState({ question_text: event.target.value });
+  }
+
+  handleChoiceSelect(i) {
+    if (i < 0 || i >= this.state.choices.length) {
+      console.error("Invalid question choice index for selection", i);
+    } else {
+      this.setState({ correct_choice_index: i });
+    }
+  }
+
+  handleChoiceTextChange(i, event) {
+    if (i < 0 || i >= this.state.choices.length) {
+      console.error("Invalid question choice index for text change", i);
+    } else {
+      var choices = Array.from(this.state.choices);
+      choices[i] = event.target.value;
+      this.setState({ choices: choices });
+    }
+  }
+
   isReadyToSubmit() {
     var hasText = (text) => text.trim().length > 0;
     return hasText(this.state.question_text)
         && this.state.choices.every(hasText);
   }
 
-  handleClick() {
+  handleSubmitButtonClick() {
     this.props.onSubmit(this.state);
     // Reset state to default values.
     this.setState({
@@ -31,41 +53,26 @@ class QuestionForm extends Component {
     });
   }
 
-  renderChoiceFields() {
-    return this.state.choices.map((choice, i, choices) => {
-      var handleRadioChange = () => this.setState({ correct_choice_index: i });
-      var handleTextChange = (event) => {
-        choices[i] = event.target.value;
-        this.setState({ choices: choices });
-      };
-      return (
-        <ChoiceField
-            key={i}
-            disabled={this.props.disabled}
-            onRadioChange={handleRadioChange}
-            onTextChange={handleTextChange}
-            value={choice}
-            checked={this.state.correct_choice_index === i} />
-      );
-    });
-  }
-
   render() {
-    var handleTextChange = (event) => {
-      this.setState({ question_text: event.target.value });
-    };
     return (
       <div className="QuestionForm">
         <QuestionTextField
             disabled={this.props.disabled}
             value={this.state.question_text}
-            onChange={handleTextChange} />
+            onChange={(event) => this.handleQuestionTextChange(event)} />
 
-        { this.renderChoiceFields() }
+        <QuestionChoiceFields
+            disabled={this.props.disabled}
+            choices={this.state.choices}
+            correct_choice_index={this.state.correct_choice_index}
+            onChoiceSelect={(i) => this.handleChoiceSelect(i)}
+            onChoiceTextChange={
+              (i, event) => this.handleChoiceTextChange(i, event)
+            } />
 
         <SubmitButton
             disabled={this.props.disabled || !this.isReadyToSubmit()}
-            onClick={() => this.handleClick()} />
+            onClick={() => this.handleSubmitButtonClick()} />
       </div>
     );
   }
@@ -80,22 +87,6 @@ var QuestionTextField = (props) => (
         label="Enter a question"
         fullWidth={true}
         multiline={true}
-        variant="outlined" />
-  </div>
-);
-
-var ChoiceField = (props) => (
-  <div className="ChoiceField">
-    <Radio
-        disabled={props.disabled}
-        checked={props.checked}
-        onChange={props.onRadioChange} />
-    <TextField
-        disabled={props.disabled}
-        value={props.value}
-        onChange={props.onTextChange}
-        className="ChoiceTextField"
-        label="Enter an answer"
         variant="outlined" />
   </div>
 );

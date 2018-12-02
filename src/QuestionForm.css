@@ -7,16 +7,6 @@
   margin-bottom: 20px;
 }
 
-.ChoiceField {
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: center;
-}
-
-.ChoiceTextField {
-  width: 100%;
-}
-
 .SubmitButton {
   margin-top: 20px;
 }
