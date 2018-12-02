@@ -1,4 +1,6 @@
+import Grid from '@material-ui/core/Grid';
 import Header from './Header';
+import Paper from '@material-ui/core/Paper';
 import QuestionForm from './QuestionForm';
 import React, { Component } from 'react';
 import firebase from 'firebase';
@@ -82,16 +84,30 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="App">
         <Header
-              disabled={this.state.auth === AUTH_STATE.LOADING}
-              actionLabel={this.getHeaderActionLabel()}
-              onAction={() => this.handleHeaderAction()}/>
+            disabled={this.state.auth === AUTH_STATE.LOADING}
+            actionLabel={this.getHeaderActionLabel()}
+            onAction={() => this.handleHeaderAction()}/>
 
-        <div className="App">
-          <QuestionForm
-              disabled={this.state.auth !== AUTH_STATE.SIGNED_IN}
-              onSubmit={data => this.handleSubmit(data)} />
+        <div className="Content">
+          <Grid container spacing={16}>
+
+            <Grid item xs={12} lg={4}>
+              <Paper className="Container">
+                <QuestionForm
+                    disabled={this.state.auth !== AUTH_STATE.SIGNED_IN}
+                    onSubmit={data => this.handleSubmit(data)} />
+              </Paper>
+            </Grid>
+
+            <Grid item xs={12} lg={8}>
+              <Paper className="Container">
+                TODO: Add table of all existing questions.
+              </Paper>
+            </Grid>
+
+          </Grid>
         </div>
       </div>
     );

@@ -1,6 +1,16 @@
+body {
+  background-color: #FAFAFA;
+}
+
 .App {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
+  flex-grow: 1;
+}
+
+.Content {
+  margin: 16px;
+}
+
+.Container {
+  padding: 16px;
+  text-align: center;
 }
