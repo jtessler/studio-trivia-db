@@ -17,6 +17,7 @@ class App extends Component {
     super(props);
     this.state = {
       auth: AUTH_STATE.LOADING,
+      question_data: {},
     };
   }
 
@@ -33,10 +34,26 @@ class App extends Component {
 
     firebase.auth().onAuthStateChanged(user => {
       if (user === null) {
-        this.setState({ auth: AUTH_STATE.SIGNED_OUT });
+        this.handleSignOut();
       } else {
-        this.setState({ auth: AUTH_STATE.SIGNED_IN });
+        this.handleSignIn(user);
       }
+    });
+  }
+
+  handleSignIn(user) {
+    var ref = firebase.database().ref("/questions");
+    ref.orderByChild("user_id").equalTo(user.uid).on("value", (snapshot) => {
+      this.setState({ question_data: snapshot.val() });
+    });
+    this.setState({ auth: AUTH_STATE.SIGNED_IN });
+  }
+
+  handleSignOut() {
+    firebase.database().ref("/questions").off("value");
+    this.setState({
+      auth: AUTH_STATE.SIGNED_OUT,
+      question_data: {},
     });
   }
 
