@@ -10,9 +10,10 @@ class QuestionTable extends Component {
 
   render() {
     return (
-      <Table>
+      <Table padding="dense">
         <TableHead>
           <TableRow>
+            <TableCell> </TableCell>
             <TableCell>Question</TableCell>
             <TableCell>Answers</TableCell>
           </TableRow>
@@ -22,6 +23,8 @@ class QuestionTable extends Component {
             Object.keys(this.props.questions).map((key) => (
               <QuestionTableRow
                   key={key}
+                  onDelete={() => this.props.onDeleteQuestion(key)}
+                  disabled={this.props.disabled}
                   question={this.props.questions[key]} />
             ))
           }

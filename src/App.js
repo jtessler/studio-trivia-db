@@ -104,6 +104,10 @@ class App extends Component {
     }
   }
 
+  handleDeleteQuestion(key) {
+    firebase.database().ref("/questions").child(key).remove();
+  }
+
   render() {
     return (
       <div className="App">
@@ -127,6 +131,7 @@ class App extends Component {
               <Paper className="Container">
                 <QuestionTable
                     disabled={this.state.auth !== AUTH_STATE.SIGNED_IN}
+                    onDeleteQuestion={(key) => this.handleDeleteQuestion(key)}
                     questions={this.state.question_data} />
               </Paper>
             </Grid>
