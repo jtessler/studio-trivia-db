@@ -45,7 +45,11 @@ class App extends Component {
   handleSignIn(user) {
     var ref = firebase.database().ref("/questions");
     ref.orderByChild("user_id").equalTo(user.uid).on("value", (snapshot) => {
-      this.setState({ question_data: snapshot.val() });
+      if (snapshot.exists()) {
+        this.setState({ question_data: snapshot.val() });
+      } else {
+        this.setState({ question_data: [] });  // Default to an empty list.
+      }
     });
     this.setState({ auth: AUTH_STATE.SIGNED_IN });
   }
