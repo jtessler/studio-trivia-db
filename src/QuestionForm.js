@@ -56,10 +56,16 @@ class QuestionForm extends Component {
   render() {
     return (
       <div className="QuestionForm">
-        <QuestionTextField
-            disabled={this.props.disabled}
-            value={this.state.question_text}
-            onChange={(event) => this.handleQuestionTextChange(event)} />
+        <div className="QuestionTextField">
+          <TextField
+              onChange={(event) => this.handleQuestionTextChange(event)}
+              disabled={this.props.disabled}
+              value={this.props.question_text}
+              label="Enter a question"
+              fullWidth={true}
+              multiline={true}
+              variant="outlined" />
+        </div>
 
         <QuestionChoiceFields
             disabled={this.props.disabled}
@@ -70,39 +76,20 @@ class QuestionForm extends Component {
               (i, event) => this.handleChoiceTextChange(i, event)
             } />
 
-        <SubmitButton
-            disabled={this.props.disabled || !this.isReadyToSubmit()}
-            onClick={() => this.handleSubmitButtonClick()} />
+        <div className="SubmitButton">
+          <Button
+              onClick={() => this.handleSubmitButtonClick()}
+              disabled={this.props.disabled || !this.isReadyToSubmit()}
+              variant="contained"
+              size="large"
+              fullWidth={true}
+              color="primary">
+            Submit
+          </Button>
+        </div>
       </div>
     );
   }
 }
-
-var QuestionTextField = (props) => (
-  <div className="QuestionTextField">
-    <TextField
-        onChange={props.onChange}
-        disabled={props.disabled}
-        value={props.value}
-        label="Enter a question"
-        fullWidth={true}
-        multiline={true}
-        variant="outlined" />
-  </div>
-);
-
-var SubmitButton = (props) => (
-  <div className="SubmitButton">
-    <Button
-        onClick={props.onClick}
-        disabled={props.disabled}
-        variant="contained"
-        size="large"
-        fullWidth={true}
-        color="primary">
-      Submit
-    </Button>
-  </div>
-)
 
 export default QuestionForm;
