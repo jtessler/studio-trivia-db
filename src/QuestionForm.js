@@ -60,7 +60,7 @@ class QuestionForm extends Component {
           <TextField
               onChange={(event) => this.handleQuestionTextChange(event)}
               disabled={this.props.disabled}
-              value={this.props.question_text}
+              value={this.state.question_text}
               label="Enter a question"
               fullWidth={true}
               multiline={true}
