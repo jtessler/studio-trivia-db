@@ -1,3 +1,4 @@
+import DatabaseViewer from './DatabaseViewer';
 import Grid from '@material-ui/core/Grid';
 import Header from './Header';
 import Paper from '@material-ui/core/Paper';
@@ -133,6 +134,13 @@ class App extends Component {
                     disabled={this.state.auth !== AUTH_STATE.SIGNED_IN}
                     onDeleteQuestion={(key) => this.handleDeleteQuestion(key)}
                     questions={this.state.question_data} />
+              </Paper>
+            </Grid>
+
+            <Grid item xs={12} lg={12}>
+              <Paper className="Container">
+                <DatabaseViewer
+                    disabled={this.state.auth !== AUTH_STATE.SIGNED_IN} />
               </Paper>
             </Grid>
 
