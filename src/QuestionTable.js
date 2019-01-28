@@ -10,12 +10,11 @@ class QuestionTable extends Component {
 
   render() {
     return (
-      <Table padding="dense">
+      <Table padding="none">
         <TableHead>
           <TableRow>
             <TableCell> </TableCell>
             <TableCell>Question</TableCell>
-            <TableCell>Answers</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

@@ -21,7 +21,7 @@ class QuestionTableAnswerCell extends Component {
             expandIcon={<ExpandMoreIcon />}>
           {
             <Typography>
-              {this.props.answers[this.props.answer_index]}
+              {this.props.question_text}
             </Typography>
           }
         </ExpansionPanelSummary>
@@ -30,13 +30,12 @@ class QuestionTableAnswerCell extends Component {
             style={{display: 'block', paddingLeft: 0}}>
           {
             this.props.answers
-                .filter((choice, i) => i !== this.props.answer_index)
                 .map((choice, i) => (
                   <Typography
                       variant="caption"
                       gutterBottom={true}
                       key={i}>
-                    {choice}
+                    {i === this.props.answer_index ? (<b>{choice}</b>) : choice}
                   </Typography>
                 ))
           }
